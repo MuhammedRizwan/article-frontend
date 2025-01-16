@@ -12,15 +12,16 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import User from "@/Interface/user";
 import { useSelector } from "react-redux";
 import { RootState } from "@/Redux/store";
 import { update_user, user_detials } from "@/service/auth";
 import { all_active_categories } from "@/service/category";
 import { Category } from "@/Interface/category";
+import User from "@/Interface/user";
+import { Link } from "react-router-dom";
 
 export default function ProfilePage() {
-  const userId=useSelector((state:RootState)=>state.user.user?._id)
+  const userId = useSelector((state: RootState) => state.user.user?._id);
   const [isEditing, setIsEditing] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const {
@@ -38,12 +39,10 @@ export default function ProfilePage() {
       phone: "",
       email: "",
       dob: undefined,
-      password: "",
-      confirmPassword: "",
       articlePreferences: [],
     },
   });
-  
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -52,29 +51,27 @@ export default function ProfilePage() {
       } catch (error) {
         console.error("Error fetching user:", error);
       }
-    }
+    };
     const fetchCategories = async () => {
       try {
         const response = await all_active_categories();
         setCategories(response.data);
       } catch (error) {
-        console.error('Failed to fetch categories:', error);
+        console.error("Failed to fetch categories:", error);
       }
     };
 
     fetchUser();
     fetchCategories();
-  },[reset, userId])
+  }, [reset, userId]);
 
-  const onSubmit = (values: User) => {
+  const onSubmit = async (values: User) => {
     try {
-      const response = update_user(values);
+      const response = await update_user(values);
       console.log(response);
     } catch (error) {
       console.error("Error submitting form:", error);
-    }finally {
-      setIsEditing(false);
-    }
+    } 
   };
 
   const articlePreferences = watch("articlePreferences");
@@ -83,7 +80,6 @@ export default function ProfilePage() {
     <div className="max-w-2xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">User Profile</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-        {/* First Name */}
         <div>
           <Label>First Name</Label>
           <Input
@@ -95,7 +91,6 @@ export default function ProfilePage() {
           )}
         </div>
 
-        {/* Last Name */}
         <div>
           <Label>Last Name</Label>
           <Input
@@ -107,7 +102,6 @@ export default function ProfilePage() {
           )}
         </div>
 
-        {/* Phone */}
         <div>
           <Label>Phone</Label>
           <Input
@@ -125,7 +119,6 @@ export default function ProfilePage() {
           )}
         </div>
 
-        {/* Email */}
         <div>
           <Label>Email</Label>
           <Input
@@ -143,7 +136,6 @@ export default function ProfilePage() {
           )}
         </div>
 
-        {/* Date of Birth */}
         <div>
           <Label>Date of Birth</Label>
           <Controller
@@ -173,7 +165,6 @@ export default function ProfilePage() {
                     disabled={(date) =>
                       date > new Date() || date < new Date("1900-01-01")
                     }
-                    initialFocus
                   />
                 </PopoverContent>
               </Popover>
@@ -183,45 +174,6 @@ export default function ProfilePage() {
             <p className="text-red-500 text-sm">{errors.dob.message}</p>
           )}
         </div>
-
-        {/* Passwords (Only when editing) */}
-        {isEditing && (
-          <>
-            <div>
-              <Label>Password</Label>
-              <Input
-                type="password"
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 8,
-                    message: "Password must be at least 8 characters",
-                  },
-                })}
-              />
-              {errors.password && (
-                <p className="text-red-500 text-sm">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
-            <div>
-              <Label>Confirm Password</Label>
-              <Input
-                type="password"
-                {...register("confirmPassword", {
-                  validate: (value) =>
-                    value === watch("password") || "Passwords do not match",
-                })}
-              />
-              {errors.confirmPassword && (
-                <p className="text-red-500 text-sm">
-                  {errors.confirmPassword.message}
-                </p>
-              )}
-            </div>
-          </>
-        )}
 
         <div>
           <Label>Article Preferences</Label>
@@ -237,7 +189,10 @@ export default function ProfilePage() {
                   checked={articlePreferences.includes(category.name)}
                   onChange={(e) => {
                     if (e.target.checked) {
-                        setValue("articlePreferences", [...articlePreferences, category] as string[]);
+                      setValue("articlePreferences", [
+                        ...articlePreferences,
+                        category.name,
+                      ]);
                     } else {
                       setValue(
                         "articlePreferences",
@@ -246,40 +201,36 @@ export default function ProfilePage() {
                     }
                   }}
                   disabled={!isEditing}
-                  className="form-checkbox"
                 />
                 <span>{category.name}</span>
               </label>
             ))}
           </div>
-          {errors.articlePreferences && (
-            <p className="text-red-500 text-sm">
-              {errors.articlePreferences.message}
-            </p>
-          )}
         </div>
 
-        {/* Buttons */}
-        <div className="flex justify-end space-x-4">
+        <div className="flex justify-between items-center">
           {isEditing ? (
-            <>
-              <Button type="submit">Save Changes</Button>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  reset();
-                  setIsEditing(false);
-                }}
-              >
-                Cancel
-              </Button>
-            </>
+            <Button
+              type="submit"
+              variant="outline"
+              className="bg-zinc-900 text-white"
+            >
+              Update Profile
+            </Button>
           ) : (
-            <Button type="button" onClick={() => setIsEditing(true)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsEditing(true)}
+            >
               Edit Profile
             </Button>
           )}
+          <Link to="/change-password">
+            <Button type="button" variant="link">
+              Change Password
+            </Button>
+          </Link>
         </div>
       </form>
     </div>

@@ -1,6 +1,16 @@
 import axiosInstance from "@/axios";
 import { Article } from "@/Interface/article";
 
+export const get_user_prefered_articles = async (id: string|undefined) => {
+    try {
+        const response = await axiosInstance.get(`/article/prefered/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Failed to fetch articles:", error);
+        throw new Error("Failed to fetch articles");
+    }
+}
+
 export const get_user_articles = async (id: string|undefined) => {
     try {
         const response = await axiosInstance.get(`/article/user/${id}`);
@@ -32,7 +42,7 @@ export const update_article = async (data: Article) => {
     }
 }
 
-export const get_article_by_id = async (id: string) => {
+export const get_article_by_id = async (id: string|undefined) => {
     try {
         const response = await axiosInstance.get(`/article/${id}`);
         return response.data;
@@ -60,5 +70,25 @@ export const block_article = async (id: string|undefined, is_active: boolean) =>
     } catch (error) {
         console.error("Failed to block article:", error);
         throw new Error("Failed to block article");
+    }
+}
+
+export const likeArticle = async (articleId: string|undefined, userId: string|undefined) => {
+    try {
+        const response = await axiosInstance.put(`/article/like/${articleId}`, { userId });
+        return response.data;
+    } catch (error) {
+        console.error("Failed to like article:", error);
+        throw new Error("Failed to like article");
+    }
+}
+
+export const dislikesArticle = async (articleId: string|undefined, userId: string|undefined) => {
+    try {
+        const response = await axiosInstance.put(`/article/dislike/${articleId}`, { userId });
+        return response.data;
+    } catch (error) {
+        console.error("Failed to dislike article:", error);
+        throw new Error("Failed to dislike article");
     }
 }

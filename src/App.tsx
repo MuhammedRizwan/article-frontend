@@ -1,5 +1,8 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ChangePassword from './pages/ChangePassword';
+import ArticlesPage from './pages/ArticlePage';
+import LoadingSpinner from './page_component/Spinner';
 
 const LoginForm = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
@@ -15,12 +18,14 @@ const MyArticle = lazy(() => import('./pages/MyArticle'));
 function App() {
   return (
     <Router>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner/>}>
         <Routes>
           <Route path="/" element={<LoginForm />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/home" element={<Layout><Home /></Layout>} />
+          <Route path="/articles/:Id" element={<Layout><ArticlesPage /></Layout>} />
           <Route path="/profile" element={<Layout><Profile /></Layout>} />
+          <Route path="/change-password" element={<Layout><ChangePassword /></Layout>} />
           <Route path="/my-article" element={<Layout><MyArticle /></Layout>} />
           <Route path="/create-article" element={<Layout><CreateArticle /></Layout>} />
           <Route path="/edit-article/:Id" element={<Layout><EditArticlePage /></Layout>} />

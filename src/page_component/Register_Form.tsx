@@ -23,8 +23,10 @@ import User from "@/Interface/user";
 import { user_register } from "@/service/auth";
 import { all_active_categories } from "@/service/category";
 import { Category } from "@/Interface/category";
+import { useNavigate } from "react-router-dom";
 
 export default function RegistrationForm() {
+  const navigate=useNavigate()
   const {
     register,
     handleSubmit,
@@ -65,6 +67,7 @@ export default function RegistrationForm() {
       const response = await user_register(data);
       if (response.success) {
         console.log("Registration successful");
+        navigate("/");
       } else {
         console.log("Registration failed");
       }

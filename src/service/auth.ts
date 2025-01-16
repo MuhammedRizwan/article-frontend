@@ -1,5 +1,6 @@
 import axiosInstance from "@/axios";
 import User from "@/Interface/user";
+import { PasswordForm } from "@/page_component/change_password_Form";
 import { LoginFormData } from "@/page_component/Login_Form";
 
 export const user_login = async (data: LoginFormData) => {
@@ -39,5 +40,25 @@ export const update_user = async (data:User) => {
   } catch (error) {
     console.error("Failed to update user:", error);
     throw new Error("Failed to update user");
+  }
+};
+
+export const change_password = async (id: string|undefined,data:PasswordForm) => {
+  try {
+    const response = await axiosInstance.put(`/change-password/${id}`, data);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to change password:", error);
+    throw new Error("Failed to change password");
+  }
+};
+
+export const logout = async () => {
+  try {
+    const response = await axiosInstance.get("/logout");
+    return response.data;
+  } catch (error) {
+    console.error("Failed to logout:", error);
+    throw new Error("Failed to logout");
   }
 };

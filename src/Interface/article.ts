@@ -18,4 +18,5 @@ export interface Article {
   is_active?: boolean;
   likes?: string[];
   dislikes?: string[];
+  createdAt?: string;
 }

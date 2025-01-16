@@ -15,7 +15,7 @@ import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { user_login } from "@/service/auth";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/Redux/user_reducer";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export interface LoginFormData {
   identifier: string;
@@ -47,9 +47,7 @@ export default function LoginForm() {
       if (response.success) {
         dispatch(setUser(response.data));
         navigate("/home");
-      } else {
-        console.log("Login failed");
-      }
+      } 
     } catch (error) {
       console.log("Login failed:", error);
     } finally {
@@ -171,9 +169,13 @@ export default function LoginForm() {
           )}
         </form>
         <div className="mt-4 text-center text-sm">
-          <a href="#" className="text-blue-500 hover:underline">
-            Forgot password?
-          </a>
+          Don't have an account?{" "}
+          <Link
+            to="/signup"
+            className="ms-3 bg-zinc-900 text-white  rounded-md hover:bg-slate-200 hover:text-black px-2 py-1"
+          >
+            Sign Up
+          </Link>
         </div>
       </CardContent>
     </Card>
