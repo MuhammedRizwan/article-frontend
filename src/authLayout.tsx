@@ -1,22 +1,22 @@
-// src/components/ProtectedRoute.tsx
+// src/components/AuthLayout.tsx
 import { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/Redux/store';
 
-interface ProtectedRouteProps {
+interface AuthLayoutProps {
   children: ReactNode;
 }
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+const AuthLayout = ({ children }: AuthLayoutProps) => {
   const user = useSelector((state: RootState) => state.user.user);
   const location = useLocation();
 
-  if (!user) {
-    return <Navigate to="/" state={{ from: location }} replace />;
+  if (user) {
+    return <Navigate to="/home" state={{ from: location }} replace />;
   }
 
   return <>{children}</>;
 };
 
-export default ProtectedRoute;
+export default AuthLayout;
