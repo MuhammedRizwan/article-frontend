@@ -5,7 +5,11 @@ import { Badge } from "@/components/ui/badge";
 import { PlusCircle, Edit, Ban } from "lucide-react";
 import { Article } from "@/Interface/article";
 import { Link } from "react-router-dom";
-import { block_article, delete_article, get_user_articles } from "@/service/article";
+import {
+  block_article,
+  delete_article,
+  get_user_articles,
+} from "@/service/article";
 import { useSelector } from "react-redux";
 import { RootState } from "@/Redux/store";
 import { Category } from "@/Interface/category";
@@ -38,7 +42,7 @@ export default function ArticleList() {
   };
   const handleDeleteArticle = async (article: Article) => {
     try {
-      const response = await delete_article(article._id);  
+      const response = await delete_article(article._id);
       console.log(response);
       if (response.success) {
         setArticles(articles.filter((a) => a._id !== article._id));
@@ -63,7 +67,10 @@ export default function ArticleList() {
       {articles.length > 0 ? (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {articles.map((article) => (
-            <Card key={article._id} className="flex flex-col">
+            <Card
+              key={article._id}
+              className="flex flex-col bg-coolBlue-400 border-coolBlue-200"
+            >
               <CardContent className="p-4">
                 <div className="flex items-start space-x-4">
                   <div className="relative w-24 h-24 flex-shrink-0">
@@ -78,25 +85,29 @@ export default function ArticleList() {
                     />
                   </div>
                   <div className="flex-grow">
-                    <h2 className="text-xl font-semibold mb-2">
+                    <h2 className="text-xl font-semibold mb-2 text-white">
                       {article.title}
                     </h2>
-                    <p className="text-sm text-gray-500 mb-2">
+                    <p className="text-sm text-gray-400 mb-2">
                       {article.description}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {article.categoryIds.map((categoryId) => (
                         <Badge
                           key={(categoryId as Category)._id}
-                          variant="secondary"
+                          variant="default"
                         >
                           {(categoryId as Category).name}
                         </Badge>
                       ))}
                     </div>
                   </div>
-                    <Link to={`/edit-article/${article._id}`}>
-                    <Button variant="outline" size="sm">
+                  <Link to={`/edit-article/${article._id}`}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="bg-coolBlue-300 border-coolBlue-300 hover:bg-coolBlue-200"
+                    >
                       <Edit className="mr-2 h-4 w-4" /> Edit
                     </Button>
                   </Link>
@@ -104,8 +115,10 @@ export default function ArticleList() {
               </CardContent>
               <CardFooter className="flex justify-between items-center p-4 mt-auto">
                 <div className="flex space-x-2">
-                  <Badge variant="outline">{article.likes?.length} Likes</Badge>
-                  <Badge variant="outline">
+                  <Badge className="bg-coolBlue-300 hover:bg-coolBlue-300 text-green-950 cursor-default">
+                    {article.likes?.length} Likes
+                  </Badge>
+                  <Badge className="bg-coolBlue-300 hover:bg-coolBlue-300 text-red-950 cursor-default">
                     {article.dislikes?.length} Dislikes
                   </Badge>
                 </div>
@@ -114,15 +127,18 @@ export default function ArticleList() {
                     variant="outline"
                     size="sm"
                     onClick={() => handleDeleteArticle(article)}
+                    className="bg-coolBlue-300 border-coolBlue-300 hover:bg-coolBlue-200 text-red-950 hover:text-red-950"
                   >
-                    <Ban className="mr-2 h-4 w-4" /> delete
+                    <Ban className="mr-2 h-4 w-4 text-red-950" /> delete
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleBlockArticle(article)}
+                    className={` w-24 bg-coolBlue-300 border-coolBlue-300 hover:bg-coolBlue-200 flex items-center justify-between ${article.is_active ? 'text-red-950 hover:text-red-950' : 'text-green-950 hover:text-green-950'}`}
                   >
-                    <Ban className="mr-2 h-4 w-4" /> {article.is_active ? "Block" : "Unblock"}
+                    <Ban className="mr-2 h-4 w-4" />{" "}
+                    {article.is_active ? "Block" : "Unblock"}
                   </Button>
                 </div>
               </CardFooter>

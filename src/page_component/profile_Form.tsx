@@ -71,7 +71,7 @@ export default function ProfilePage() {
       console.log(response);
     } catch (error) {
       console.error("Error submitting form:", error);
-    } 
+    }
   };
 
   const articlePreferences = watch("articlePreferences");
@@ -85,6 +85,7 @@ export default function ProfilePage() {
           <Input
             {...register("firstName", { required: "First name is required" })}
             disabled={!isEditing}
+            className="border-coolBlue-500"
           />
           {errors.firstName && (
             <p className="text-red-500 text-sm">{errors.firstName.message}</p>
@@ -96,6 +97,7 @@ export default function ProfilePage() {
           <Input
             {...register("lastName", { required: "Last name is required" })}
             disabled={!isEditing}
+            className="border-coolBlue-500"
           />
           {errors.lastName && (
             <p className="text-red-500 text-sm">{errors.lastName.message}</p>
@@ -112,6 +114,7 @@ export default function ProfilePage() {
                 message: "Phone number must be 10 digits",
               },
             })}
+            className="border-coolBlue-500"
             disabled={!isEditing}
           />
           {errors.phone && (
@@ -130,6 +133,7 @@ export default function ProfilePage() {
               },
             })}
             disabled={!isEditing}
+            className="border-coolBlue-500"
           />
           {errors.email && (
             <p className="text-red-500 text-sm">{errors.email.message}</p>
@@ -200,6 +204,7 @@ export default function ProfilePage() {
                       );
                     }
                   }}
+                  className="border-coolBlue-500" 
                   disabled={!isEditing}
                 />
                 <span>{category.name}</span>
@@ -222,6 +227,8 @@ export default function ProfilePage() {
               type="button"
               variant="outline"
               onClick={() => setIsEditing(true)}
+            className="bg-coolBlue-300 text-white hover:bg-coolBlue-500 hover:text-white"
+
             >
               Edit Profile
             </Button>

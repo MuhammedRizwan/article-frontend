@@ -36,28 +36,28 @@ const handleLogout = async() => {
 }
   return (
     <header className="border-b">
-      <nav className="max-w-screen-2xl mx-auto px-4 flex items-center justify-between h-16">
+      <nav className=" bg-coolBlue-400 max-w-screen-2xl mx-auto px-4 flex items-center justify-between h-16">
         <div className="flex-shrink-0">
           <Link to="/home" className="block">
-            <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold">L</span>
+            <div className="h-8 w-8 bg-white rounded-lg flex items-center justify-center">
+              <span className="text-black font-bold">A</span>
             </div>
           </Link>
         </div>
 
         <div className="hidden md:flex items-center justify-center space-x-8 absolute left-1/2 -translate-x-1/2">
-          <Link to="/home" className="text-sm font-medium hover:text-primary">
+          <Link to="/home" className="text-sm text-white font-medium hover:text-gray-400">
             Home
           </Link>
           <Link
             to="/my-article"
-            className="text-sm font-medium hover:text-primary"
+            className="text-sm text-white font-medium hover:text-gray-400"
           >
             My Articles
           </Link>
           <Link
             to="/categories"
-            className="text-sm font-medium hover:text-primary"
+            className="text-sm text-white font-medium hover:text-gray-400"
           >
             Categories
           </Link>
@@ -69,9 +69,9 @@ const handleLogout = async() => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="hidden md:flex"
+                className="hidden md:flex bg-white hover:bg-gray-300"
               >
-                <Menu className="h-5 w-5" />
+                <Menu className="h-5 w-5 text-primary hover:text-gray-400" />
                 <span className="sr-only">Menu</span>
               </Button>
             </DropdownMenuTrigger>
