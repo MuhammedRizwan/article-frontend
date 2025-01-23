@@ -64,17 +64,20 @@ export default function ProfilePage() {
     fetchUser();
     fetchCategories();
   }, [reset, userId]);
+  
+    const articlePreferences = watch("articlePreferences");
+    const allFormValues = watch();
 
   const onSubmit = async (values: User) => {
     try {
+      if(allFormValues){
       const response = await update_user(values);
-      console.log(response);
+      reset(response.data);
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
-
-  const articlePreferences = watch("articlePreferences");
 
   return (
     <div className="max-w-2xl mx-auto p-4">
@@ -189,22 +192,28 @@ export default function ProfilePage() {
               >
                 <Input
                   type="checkbox"
-                  value={category._id}
-                  checked={articlePreferences.includes(category.name)}
+                  value={category._id || ""}
+                  checked={
+                    category._id
+                      ? articlePreferences.includes(category._id)
+                      : false
+                  } 
                   onChange={(e) => {
-                    if (e.target.checked) {
-                      setValue("articlePreferences", [
-                        ...articlePreferences,
-                        category.name,
-                      ]);
-                    } else {
-                      setValue(
-                        "articlePreferences",
-                        articlePreferences.filter((c) => c !== category.name)
-                      );
+                    if (category._id) {
+                      if (e.target.checked) {
+                        setValue("articlePreferences", [
+                          ...articlePreferences,
+                          category._id,
+                        ]);
+                      } else {
+                        setValue(
+                          "articlePreferences",
+                          articlePreferences.filter((c) => c !== category._id)
+                        );
+                      }
                     }
                   }}
-                  className="border-coolBlue-500" 
+                  className="border-coolBlue-500"
                   disabled={!isEditing}
                 />
                 <span>{category.name}</span>
@@ -227,8 +236,7 @@ export default function ProfilePage() {
               type="button"
               variant="outline"
               onClick={() => setIsEditing(true)}
-            className="bg-coolBlue-300 text-white hover:bg-coolBlue-500 hover:text-white"
-
+              className="bg-coolBlue-300 text-white hover:bg-coolBlue-500 hover:text-white"
             >
               Edit Profile
             </Button>
