@@ -6,6 +6,7 @@ import { RootState } from "@/Redux/store";
 import { useSelector } from "react-redux";
 import { change_password } from "@/service/auth";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export type PasswordForm = {
   currentPassword: string;
@@ -27,6 +28,7 @@ export default function ChangePasswordPage() {
     try {
       const response = await change_password(userId,values);
       if (response.success) {
+        toast.success(response.message);
           navigate(-1);
       }
     } catch (error) {

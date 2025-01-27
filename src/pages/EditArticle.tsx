@@ -66,7 +66,7 @@ export default function EditArticlePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-coolBlue-200">
       <main className="container mx-auto py-6">
         {existingArticle ? (
           <CreateArticleFormData

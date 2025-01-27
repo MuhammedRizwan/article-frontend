@@ -18,6 +18,7 @@ export default function ContentBlocks({ control }: Props) {
     control,
     name: "contentBlocks",
   });
+
   const addBlock = (type: "image" | "header" | "text" | "video") => {
     append({
       type,
@@ -26,6 +27,7 @@ export default function ContentBlocks({ control }: Props) {
       cloudinaryId: "",
     });
   };
+
   const handleFileUpload = async (
     file: File,
     index: number,
@@ -73,7 +75,8 @@ export default function ContentBlocks({ control }: Props) {
           <Controller
             name={`contentBlocks.${index}.content`}
             control={control}
-            render={({ field }) => (
+            rules={{ required: "Image is required" }}
+            render={({ field, fieldState }) => (
               <div className="space-y-2 w-full">
                 {field.value ? (
                   <img
@@ -99,6 +102,9 @@ export default function ContentBlocks({ control }: Props) {
                     Uploading...
                   </div>
                 )}
+                {fieldState.error && (
+                  <p className="text-red-500 text-xs">{fieldState.error.message}</p>
+                )}
               </div>
             )}
           />
@@ -108,30 +114,33 @@ export default function ContentBlocks({ control }: Props) {
           <Controller
             name={`contentBlocks.${index}.content`}
             control={control}
-            render={({ field }) => (
+            rules={{ required: "Video is required" }}
+            render={({ field, fieldState }) => (
               <div className="space-y-2 w-full">
-              
                 {field.value ? (
                   <video controls className="max-w-xs h-auto rounded">
                     <source src={field.value} type="video/mp4" />
                   </video>
-                ):(
+                ) : (
                   <Input
-                  type="file"
-                  accept="video/*"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) {
-                      handleFileUpload(file, index, field.onChange);
-                    }
-                  }}
-                />
+                    type="file"
+                    accept="video/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        handleFileUpload(file, index, field.onChange);
+                      }
+                    }}
+                  />
                 )}
                 {uploading[index] && (
                   <div className="flex items-center gap-2 text-sm text-gray-500">
                     <Loader2 className="h-4 w-4 animate-spin" />
                     Uploading...
                   </div>
+                )}
+                {fieldState.error && (
+                  <p className="text-red-500 text-xs">{fieldState.error.message}</p>
                 )}
               </div>
             )}
@@ -142,8 +151,14 @@ export default function ContentBlocks({ control }: Props) {
           <Controller
             name={`contentBlocks.${index}.content`}
             control={control}
-            render={({ field }) => (
-              <Input {...field} placeholder="Enter header text" />
+            rules={{ required: "Header text is required" }}
+            render={({ field, fieldState }) => (
+              <div>
+                <Input {...field} placeholder="Enter header text" />
+                {fieldState.error && (
+                  <p className="text-red-500 text-xs">{fieldState.error.message}</p>
+                )}
+              </div>
             )}
           />
         );
@@ -152,8 +167,14 @@ export default function ContentBlocks({ control }: Props) {
           <Controller
             name={`contentBlocks.${index}.content`}
             control={control}
-            render={({ field }) => (
-              <Textarea {...field} placeholder="Enter your text content" />
+            rules={{ required: "Text content is required" }}
+            render={({ field, fieldState }) => (
+              <div>
+                <Textarea {...field} placeholder="Enter your text content" />
+                {fieldState.error && (
+                  <p className="text-red-500 text-xs">{fieldState.error.message}</p>
+                )}
+              </div>
             )}
           />
         );
@@ -169,7 +190,7 @@ export default function ContentBlocks({ control }: Props) {
           key={block.id}
           className="flex items-start gap-2 p-4 border rounded-lg"
         >
-          <div className="flex-1">
+          <div className="flex-1" style={{marginTop: "3%"}}>
             {renderBlockContent(block as ContentBlock, index)}
           </div>
           <div className="flex flex-col gap-1">

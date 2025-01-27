@@ -23,9 +23,9 @@ export const user_register = async (data:User) => {
   }
 };
 
-export const user_detials = async (id: string|undefined) => {
+export const user_detials = async (userId: string|undefined) => {
   try {
-    const response = await axiosInstance.get(`/user/${id}`);
+    const response = await axiosInstance.get(`/user/${userId}`);
     return response.data;
   } catch (error) {
     console.error("Failed to get user details:", error);
@@ -35,7 +35,7 @@ export const user_detials = async (id: string|undefined) => {
 
 export const update_user = async (data:User) => {
   try {
-    const response = await axiosInstance.put(`/update/${data._id}`, data);
+    const response = await axiosInstance.put(`/update`, data);
     return response.data;
   } catch (error) {
     console.error("Failed to update user:", error);
@@ -43,9 +43,9 @@ export const update_user = async (data:User) => {
   }
 };
 
-export const change_password = async (id: string|undefined,data:PasswordForm) => {
+export const change_password = async (userId: string|undefined,data:PasswordForm) => {
   try {
-    const response = await axiosInstance.put(`/change-password/${id}`, data);
+    const response = await axiosInstance.put(`/change-password/${userId}`, data);
     return response.data;
   } catch (error) {
     console.error("Failed to change password:", error);

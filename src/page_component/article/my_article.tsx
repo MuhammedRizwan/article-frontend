@@ -13,6 +13,7 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "@/Redux/store";
 import { Category } from "@/Interface/category";
+import { toast } from "sonner";
 
 export default function ArticleList() {
   const userId = useSelector((state: RootState) => state.user.user?._id);
@@ -30,8 +31,8 @@ export default function ArticleList() {
   const handleBlockArticle = async (article: Article) => {
     try {
       const response = await block_article(article._id, !article.is_active);
-      console.log(response);
       if (response.success) {
+        toast.info(response.message);
         setArticles(
           articles.map((a) => (a._id === article._id ? response.data : a))
         );
@@ -45,6 +46,7 @@ export default function ArticleList() {
       const response = await delete_article(article._id);
       console.log(response);
       if (response.success) {
+        toast.info(response.message);
         setArticles(articles.filter((a) => a._id !== article._id));
       }
     } catch (error) {
@@ -72,7 +74,7 @@ export default function ArticleList() {
               className="flex flex-col bg-coolBlue-400 border-coolBlue-200"
             >
               <CardContent className="p-4">
-                <div className="flex items-start space-x-4">
+                <div className="w-full flex items-start space-x-4">
                   <div className="relative w-24 h-24 flex-shrink-0">
                     <img
                       src={
@@ -89,7 +91,7 @@ export default function ArticleList() {
                       {article.title}
                     </h2>
                     <p className="text-sm text-gray-400 mb-2">
-                      {article.description}
+                    {article.description.slice(0, 23)}{article.description.length > 20 && '...'}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {article.categoryIds.map((categoryId) => (

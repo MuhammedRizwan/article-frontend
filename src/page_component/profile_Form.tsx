@@ -19,6 +19,7 @@ import { all_active_categories } from "@/service/category";
 import { Category } from "@/Interface/category";
 import User from "@/Interface/user";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function ProfilePage() {
   const userId = useSelector((state: RootState) => state.user.user?._id);
@@ -72,7 +73,10 @@ export default function ProfilePage() {
     try {
       if(allFormValues){
       const response = await update_user(values);
-      reset(response.data);
+      if (response.success) {
+        toast.success(response.message);
+        reset(response.data);
+      }
       }
     } catch (error) {
       console.error("Error submitting form:", error);

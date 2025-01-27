@@ -26,7 +26,7 @@ export default function TitleAndDescription({ control }: Props) {
                 {...field}
               />
               {fieldState.error && (
-                <p className="text-red-500 text-sm">{fieldState.error.message}</p>
+                <p className="text-red-500 text-xs">{fieldState.error.message}</p>
               )}
             </>
           )}
@@ -48,7 +48,7 @@ export default function TitleAndDescription({ control }: Props) {
                 {...field}
               />
               {fieldState.error && (
-                <p className="text-red-500 text-sm">{fieldState.error.message}</p>
+                <p className="text-red-500 text-xs">{fieldState.error.message}</p>
               )}
             </>
           )}

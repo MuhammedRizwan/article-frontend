@@ -1,22 +1,16 @@
-// src/components/AuthLayout.tsx
-import { ReactNode } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Outlet, Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/Redux/store';
 
-interface AuthLayoutProps {
-  children: ReactNode;
-}
-
-const AuthLayout = ({ children }: AuthLayoutProps) => {
+const AuthLayout = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const location = useLocation();
 
   if (user) {
     return <Navigate to="/home" state={{ from: location }} replace />;
   }
+  return <Outlet />
 
-  return <>{children}</>;
 };
 
 export default AuthLayout;

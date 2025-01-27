@@ -1,10 +1,13 @@
+import { Outlet } from "react-router-dom";
 import NavBar from "./page_component/nav_bar";
 
-export default function Layout({ children }:{children: React.ReactNode}) {
-    return (
-      <div>
-        <NavBar />
-        <main>{children}</main>
-      </div>
-    );
-  }
+export default function Layout() {
+  return (
+    <div>
+      <NavBar />
+      <main >
+        <Outlet />
+      </main>
+    </div>
+  );
+}

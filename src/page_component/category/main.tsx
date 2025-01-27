@@ -19,6 +19,7 @@ import {
   getCategories,
   updateCategory,
 } from "@/service/category";
+import { toast } from "sonner";
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -53,6 +54,7 @@ export default function CategoriesPage() {
     if (category._id) {
       const response = await updateCategory(category);
       if (response.success) {
+        toast.success(response.message);
         setCategories(
           categories.map((c) => (c._id === category._id ? category : c))
         );
@@ -71,6 +73,7 @@ export default function CategoriesPage() {
       const response = await activateAndDeactivate_category(category._id,
         !category.is_active);
       if (response.success) {
+        toast.info(response.message);
         setCategories(
           categories.map((c) => (c._id === category._id ? response.data : c))
         );
@@ -84,6 +87,7 @@ export default function CategoriesPage() {
     try {
       const response = await deleteCategory(category._id);
       if (response.success) {
+        toast.info(response.message);
         setCategories(categories.filter((c) => c._id !== category._id));
       }
     } catch (error) {

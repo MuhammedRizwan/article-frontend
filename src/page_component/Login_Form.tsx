@@ -16,6 +16,7 @@ import { user_login } from "@/service/auth";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/Redux/user_reducer";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export interface LoginFormData {
   identifier: string;
@@ -46,8 +47,11 @@ export default function LoginForm() {
       const response = await user_login(data);
       if (response.success) {
         dispatch(setUser(response.data));
+        toast.success(response.message);
         navigate("/home");
-      } 
+      } else{
+        toast.error(response.message);
+      }
     } catch (error) {
       console.log("Login failed:", error);
     } finally {

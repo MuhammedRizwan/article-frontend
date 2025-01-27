@@ -24,6 +24,7 @@ import { user_register } from "@/service/auth";
 import { all_active_categories } from "@/service/category";
 import { Category } from "@/Interface/category";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function RegistrationForm() {
   const navigate=useNavigate()
@@ -66,10 +67,10 @@ export default function RegistrationForm() {
     try {
       const response = await user_register(data);
       if (response.success) {
-        console.log("Registration successful");
+        toast.success(response.message);
         navigate("/");
       } else {
-        console.log("Registration failed");
+        toast.error(response.message);
       }
     } catch (error) {
       console.error("Registration failed:", error);

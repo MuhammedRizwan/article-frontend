@@ -21,6 +21,7 @@ export default function HomePage() {
       if (!userId) return;
       const response = await get_user_prefered_articles(userId);
       if (response) {
+        console.log(response);
         setArticles(response.data);
       }
     };

@@ -10,7 +10,6 @@ interface Props {
 }
 
 export default function CategoriesInput({ control, categories }: Props) {
-  console.log(categories);
 
   return (
     <div className="space-y-2">

@@ -1,9 +1,9 @@
 import axiosInstance from "@/axios";
 import { Article } from "@/Interface/article";
 
-export const get_user_prefered_articles = async (id: string|undefined) => {
+export const get_user_prefered_articles = async (userId: string|undefined) => {
     try {
-        const response = await axiosInstance.get(`/article/prefered/${id}`);
+        const response = await axiosInstance.get(`/article/prefered/${userId}`);
         return response.data;
     } catch (error) {
         console.error("Failed to fetch articles:", error);
@@ -11,9 +11,9 @@ export const get_user_prefered_articles = async (id: string|undefined) => {
     }
 }
 
-export const get_user_articles = async (id: string|undefined) => {
+export const get_user_articles = async (userId: string|undefined) => {
     try {
-        const response = await axiosInstance.get(`/article/user/${id}`);
+        const response = await axiosInstance.get(`/article/user/${userId}`);
         return response.data;
     } catch (error) {
         console.error("Failed to fetch articles:", error);
@@ -33,8 +33,7 @@ export const create_article = async (userId: string|undefined,data: Article) => 
 
 export const update_article = async (data: Article) => {
     try {
-        console.log(data)
-        const response = await axiosInstance.put(`/article/edit/${data._id}`, data);
+        const response = await axiosInstance.put(`/article/edit`, data);
         return response.data;
     } catch (error) {
         console.error("Failed to update article:", error);
@@ -42,9 +41,9 @@ export const update_article = async (data: Article) => {
     }
 }
 
-export const get_article_by_id = async (id: string|undefined) => {
+export const get_article_by_id = async (articleId: string|undefined) => {
     try {
-        const response = await axiosInstance.get(`/article/${id}`);
+        const response = await axiosInstance.get(`/article/${articleId}`);
         return response.data;
     } catch (error) {
         console.error("Failed to fetch article:", error);
@@ -52,9 +51,9 @@ export const get_article_by_id = async (id: string|undefined) => {
     }
 }
 
-export const delete_article = async (id: string|undefined) => {
+export const delete_article = async (articleId: string|undefined) => {
     try {
-        const response = await axiosInstance.delete(`/article/delete/${id}`);
+        const response = await axiosInstance.delete(`/article/delete/${articleId}`);
         return response.data;
     } catch (error) {
         console.error("Failed to delete article:", error);
@@ -62,10 +61,9 @@ export const delete_article = async (id: string|undefined) => {
     }
 }
 
-export const block_article = async (id: string|undefined, is_active: boolean) => {
+export const block_article = async (articleId: string|undefined, is_active: boolean) => {
     try {
-        console.log(is_active)
-        const response = await axiosInstance.put(`/article/activate/${id}`, { is_active });
+        const response = await axiosInstance.put(`/article/activate/${articleId}`, { is_active });
         return response.data;
     } catch (error) {
         console.error("Failed to block article:", error);

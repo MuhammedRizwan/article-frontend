@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User, Menu, X, LogOut } from "lucide-react"; 
+import { User, Menu, X, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -21,19 +21,19 @@ export default function NavBar() {
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
   };
-const [isOpen, setIsOpen] = useState(false);
-const handleLogout = async() => {
-  try {
-   const response = await logout();
-   if (response.success) {
-    dispatch(clearUser());
-    setIsOpen(false);
-    navigate("/");
-   }
-  } catch (error) {
-    console.log(error);
+  const [isOpen, setIsOpen] = useState(false);
+  const handleLogout = async () => {
+    try {
+      const response = await logout();
+      if (response.success) {
+        dispatch(clearUser());
+        setIsOpen(false);
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
-}
   return (
     <header className="border-b">
       <nav className=" bg-coolBlue-400 max-w-screen-2xl mx-auto px-4 flex items-center justify-between h-16">
@@ -118,22 +118,22 @@ const handleLogout = async() => {
               Home
             </Link>
             <Link
-              to="/pages"
+              to="/my-article"
               className="px-4 py-2 text-sm hover:bg-accent"
               onClick={() => setMenuOpen(false)}
             >
-              Pages
+              My Articles
             </Link>
             <Link
-              to="/settings"
+              to="/categories"
               className="px-4 py-2 text-sm hover:bg-accent"
               onClick={() => setMenuOpen(false)}
             >
-              Settings
+              Categories
             </Link>
             <button
               className="flex items-center px-4 py-2 text-sm hover:bg-accent"
-              onClick={() => setMenuOpen(false)}
+              onClick={() =>{ navigate("/profile"); setMenuOpen(false)}}
             >
               <User className="h-4 w-4 mr-2" />
               Profile
