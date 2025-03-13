@@ -36,7 +36,7 @@ export default function NavBar() {
   }
   return (
     <header className="border-b">
-      <nav className=" bg-coolBlue-400 max-w-screen-2xl mx-auto px-4 flex items-center justify-between h-16">
+      <nav className=" bg-green-500 max-w-screen-2xl mx-auto px-4 flex items-center justify-between h-16">
         <div className="flex-shrink-0">
           <Link to="/home" className="block">
             <div className="h-8 w-8 bg-white rounded-lg flex items-center justify-center">

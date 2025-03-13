@@ -18,9 +18,10 @@ import { update_user, user_detials } from "@/service/auth";
 import { all_active_categories } from "@/service/category";
 import { Category } from "@/Interface/category";
 import User from "@/Interface/user";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function ProfilePage() {
+  const navigate=useNavigate()
   const userId = useSelector((state: RootState) => state.user.user?._id);
   const [isEditing, setIsEditing] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -73,7 +74,7 @@ export default function ProfilePage() {
       if(allFormValues){
       const response = await update_user(values);
       if (response.success) {
-        reset(response.data);
+        navigate("/")
       }
       }
     } catch (error) {
@@ -90,7 +91,7 @@ export default function ProfilePage() {
           <Input
             {...register("firstName", { required: "First name is required" })}
             disabled={!isEditing}
-            className="border-coolBlue-500"
+            className="border-green-500"
           />
           {errors.firstName && (
             <p className="text-red-500 text-sm">{errors.firstName.message}</p>
@@ -102,7 +103,7 @@ export default function ProfilePage() {
           <Input
             {...register("lastName", { required: "Last name is required" })}
             disabled={!isEditing}
-            className="border-coolBlue-500"
+            className="border-green-500"
           />
           {errors.lastName && (
             <p className="text-red-500 text-sm">{errors.lastName.message}</p>
@@ -119,7 +120,7 @@ export default function ProfilePage() {
                 message: "Phone number must be 10 digits",
               },
             })}
-            className="border-coolBlue-500"
+            className="border-green-500"
             disabled={!isEditing}
           />
           {errors.phone && (
@@ -138,7 +139,7 @@ export default function ProfilePage() {
               },
             })}
             disabled={!isEditing}
-            className="border-coolBlue-500"
+            className="border-green-500"
           />
           {errors.email && (
             <p className="text-red-500 text-sm">{errors.email.message}</p>
@@ -215,7 +216,7 @@ export default function ProfilePage() {
                       }
                     }
                   }}
-                  className="border-coolBlue-500"
+                  className="border-green-500"
                   disabled={!isEditing}
                 />
                 <span>{category.name}</span>
@@ -229,7 +230,7 @@ export default function ProfilePage() {
             <Button
               type="submit"
               variant="outline"
-              className="bg-zinc-900 text-white"
+              className="bg-green-900 text-white"
             >
               Update Profile
             </Button>
@@ -237,8 +238,11 @@ export default function ProfilePage() {
             <Button
               type="button"
               variant="outline"
-              onClick={() => setIsEditing(true)}
-              className="bg-coolBlue-300 text-white hover:bg-coolBlue-500 hover:text-white"
+              onClick={(e) => {
+                e.preventDefault(); 
+                setIsEditing(true);
+              }}
+              className="bg-green-300 text-white hover:bg-green-500 hover:text-white"
             >
               Edit Profile
             </Button>

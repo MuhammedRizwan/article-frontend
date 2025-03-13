@@ -71,7 +71,7 @@ export default function ArticleList() {
           {articles.map((article) => (
             <Card
               key={article._id}
-              className="flex flex-col bg-coolBlue-400 border-coolBlue-200"
+              className="flex flex-col bg-green-400 border-green-200"
             >
               <CardContent className="p-4">
                 <div className="w-full flex items-start space-x-4">
@@ -108,7 +108,7 @@ export default function ArticleList() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="bg-coolBlue-300 border-coolBlue-300 hover:bg-coolBlue-200"
+                      className="bg-green-300 border-green-300 hover:bg-green-200"
                     >
                       <Edit className="mr-2 h-4 w-4" /> Edit
                     </Button>
@@ -117,10 +117,10 @@ export default function ArticleList() {
               </CardContent>
               <CardFooter className="flex justify-between items-center p-4 mt-auto">
                 <div className="flex space-x-2">
-                  <Badge className="bg-coolBlue-300 hover:bg-coolBlue-300 text-green-950 cursor-default">
+                  <Badge className="bg-green-300 hover:bg-green-300 text-green-950 cursor-default">
                     {article.likes?.length} Likes
                   </Badge>
-                  <Badge className="bg-coolBlue-300 hover:bg-coolBlue-300 text-red-950 cursor-default">
+                  <Badge className="bg-green-300 hover:bg-green-300 text-red-950 cursor-default">
                     {article.dislikes?.length} Dislikes
                   </Badge>
                 </div>
@@ -129,7 +129,7 @@ export default function ArticleList() {
                     variant="outline"
                     size="sm"
                     onClick={() => handleDeleteArticle(article)}
-                    className="bg-coolBlue-300 border-coolBlue-300 hover:bg-coolBlue-200 text-red-950 hover:text-red-950"
+                    className="bg-green-300 border-green-300 hover:bg-green-200 text-red-950 hover:text-red-950"
                   >
                     <Ban className="mr-2 h-4 w-4 text-red-950" /> delete
                   </Button>
@@ -137,7 +137,7 @@ export default function ArticleList() {
                     variant="outline"
                     size="sm"
                     onClick={() => handleBlockArticle(article)}
-                    className={` w-24 bg-coolBlue-300 border-coolBlue-300 hover:bg-coolBlue-200 flex items-center justify-between ${article.is_active ? 'text-red-950 hover:text-red-950' : 'text-green-950 hover:text-green-950'}`}
+                    className={` w-24 bg-green-300 border-green-300 hover:bg-green-200 flex items-center justify-between ${article.is_active ? 'text-red-950 hover:text-red-950' : 'text-green-950 hover:text-green-950'}`}
                   >
                     <Ban className="mr-2 h-4 w-4" />{" "}
                     {article.is_active ? "Block" : "Unblock"}

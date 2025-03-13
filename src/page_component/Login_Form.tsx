@@ -176,7 +176,7 @@ export default function LoginForm() {
           Don't have an account?{" "}
           <Link
             to="/signup"
-            className="ms-3 bg-zinc-900 text-white  rounded-md hover:bg-slate-200 hover:text-black px-2 py-1"
+            className="ms-3 bg-green-900 text-white  rounded-md hover:bg-slate-200 hover:text-black px-2 py-1"
           >
             Sign Up
           </Link>
